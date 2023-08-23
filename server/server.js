@@ -2,8 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
-const projectsRoutes = require('./routes/projects');
-const adminRoutes = require('./routes/admin');
+const projectsRoutes = require('./src/routes/projects');
+const adminRoutes = require('./src/routes/admin');
 const cors = require('cors'); // Import the 'cors' module
 
 const app = express();
