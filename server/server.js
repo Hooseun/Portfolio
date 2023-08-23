@@ -13,11 +13,11 @@ app.use(cors());
 
 app.use(express.json());
 
-// Middleware for logging request information
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+// // Middleware for logging request information
+// app.use((req, res, next) => {
+//   console.log(req.path, req.method);
+//   next();
+// });
 
 // Routes
 app.use('/api/projects', projectsRoutes);
