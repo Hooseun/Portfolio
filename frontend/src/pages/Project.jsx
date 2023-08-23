@@ -1,4 +1,5 @@
 import React from 'react';
+import API_LINK from '../api';
 import Navbar from '../components/Navbar';
 import Background2 from '../assets/bg2.jpg';
 import { useEffect, useState } from 'react';
@@ -9,7 +10,7 @@ function Project() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch('http://localhost:4000/api/projects');
+        const res = await fetch(`${API_LINK}/api/projects`);
         const json = await res.json();
 
         if (res.ok) {

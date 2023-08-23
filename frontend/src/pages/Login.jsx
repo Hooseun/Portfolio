@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
+import API_LINK from '../api';
 import Background2 from '../assets/bg2.jpg';
 import Background1 from '../assets/bg1.jpg';
 
@@ -10,7 +11,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch('http://localhost:4000/api/admin');
+      const res = await fetch(`${API_LINK}/api/admin`);
       const json = await res.json();
 
       if (res.ok) {

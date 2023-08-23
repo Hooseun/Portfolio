@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-scroll";
 import Navbar from "../components/Navbar";
 import Background2 from "../assets/bg2.jpg";
 import Img1 from "../assets/img1.jpg";

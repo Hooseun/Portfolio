@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
+import API_LINK from '../api';
 import Background2 from '../assets/bg2.jpg';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
@@ -27,7 +27,7 @@ function ProjectCreate() {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const res = await fetch('http://localhost:4000/api/projects');
+                const res = await fetch(`${API_LINK}/api/projects`);
                 const json = await res.json();
 
                 if (res.ok) {
@@ -44,7 +44,7 @@ function ProjectCreate() {
     const handleEdit = async (projectId) => {
         openEditModal(true);
         try {
-            const res = await fetch(`http://localhost:4000/api/projects/${projectId}`);
+            const res = await fetch(`${API_LINK}/api/projects/${projectId}`);
             const json = await res.json();
 
             if (res.ok) {
@@ -59,7 +59,7 @@ function ProjectCreate() {
 
     const handleEditProject = async () => {
         try {
-            const res = await fetch(`http://localhost:4000/api/projects/${selectedProjectId}`, {
+            const res = await fetch(`${API_LINK}/api/projects/${selectedProjectId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ function ProjectCreate() {
 
     const handleDelete = async (projectId) => {
         try {
-            const res = await fetch(`http://localhost:4000/api/projects/${projectId}`, {
+            const res = await fetch(`${API_LINK}/api/projects/${projectId}`, {
                 method: 'DELETE',
             });
 
@@ -115,7 +115,7 @@ function ProjectCreate() {
 
     const handleAddProject = async () => {
         try {
-            const res = await fetch('http://localhost:4000/api/projects', {
+            const res = await fetch(`${API_LINK}/api/projects`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
