@@ -32,3 +32,14 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((error) => {
     console.log(error);
   });
+
+
+  app.get("/", (req, res) => {
+    res.status(200).json({
+      message: "Welcome to El's Porfolio API",
+      usage: [
+        "GET /api/projects to look at my past projects",
+        "GET /api/ to look at my admin account",
+      ],
+    });
+  });
