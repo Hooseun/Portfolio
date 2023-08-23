@@ -4,6 +4,7 @@ import About from './pages/About'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Project from './pages/Project'
+import Admin from './pages/Admin'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/profile" element ={<Profile />} />
             <Route path="/login" element ={<Login />} />
             <Route path="/project" element ={<Project />} />
+            <Route path="/admin" element ={<Admin />} />
           </Routes>
         </BrowserRouter>
        </div>
