@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Admin = require('../models/adminModel'); 
-
+const Admin = require('../models/adminModel');
 
 router.get('/admin', async (req, res) => {
   try {

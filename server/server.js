@@ -4,20 +4,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const projectsRoutes = require('./src/routes/projects');
 const adminRoutes = require('./src/routes/admin');
-const cors = require('cors'); // Import the 'cors' module
+const cors = require('cors');
 
 const app = express();
 
-// Set up CORS middleware
 app.use(cors());
-
 app.use(express.json());
 
-// // Middleware for logging request information
-// app.use((req, res, next) => {
-//   console.log(req.path, req.method);
-//   next();
-// });
+// Middleware for logging request information
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
+});
 
 // Routes
 app.use('/api/projects', projectsRoutes);
@@ -43,3 +41,5 @@ mongoose.connect(process.env.MONGO_URI)
       ],
     });
   });
+
+  module.exports = app;

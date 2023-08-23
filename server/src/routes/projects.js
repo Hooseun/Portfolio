@@ -1,27 +1,19 @@
-const express = require('express')
+const express = require('express');
 const {
     getProjects,
     createProject,
     deleteProject,
     updateProject,
     getProject
-} = require('../controllers/projectControllers')
+} = require('../controllers/projectControllers');
 
-const router = express.Router()
+const router = express.Router();
 
-//get all projects
-router.get('/', getProjects)
+// Define your routes here
+router.get('/', getProjects);
+router.get('/:id', getProject);
+router.post('/', createProject);
+router.delete('/:id', deleteProject);
+router.patch('/:id', updateProject);
 
-router.get('/:id', getProject)
-
-//post
-router.post('/', createProject)
-
-
-//delete
-router.delete('/:id', deleteProject)
-
-//update
-router.patch('/:id', updateProject)
-
-module.exports = router
+module.exports = router;
