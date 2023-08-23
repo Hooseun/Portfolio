@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import Background2 from "../assets/bg2.jpg";
-import Img1 from "../assets/img1.jpg";
+import React, { useState } from 'react';
+import Navbar from '../components/Navbar';
+import Background2 from '../assets/bg2.jpg';
+import Img1 from '../assets/img1.jpg';
+import { useNavigate } from 'react-router-dom';
 
 function About() {
-  const [displayText, setDisplayText] = useState("about");
+  const navigate = useNavigate();
+  const [displayText, setDisplayText] = useState('about');
 
   const handlePaginationClick = (page) => {
     setDisplayText(page);
@@ -40,53 +42,52 @@ function About() {
                   4th year BSIT Student
                 </h3>
               </div>
-              <a
-               href="/project"
-                spy={true}
-                smooth={true}
-                duration={500}
+              <button
+                onClick={() => navigate('/project')}
                 className="bg-blue-500 sm:w-[10rem] md:w-[11rem] lg:w-[15rem] xl:w-[15rem] rounded-xl shadow-md flex justify-center items-center hover:scale-95 cursor-pointer"
               >
-                <h3 className="text-white sm:text-sm md:text-md lg:text-lg xl:text-xl font-bold text-center">Projects</h3>
-              </a>
+                <h3 className="text-white sm:text-sm md:text-md lg:text-lg xl:text-xl font-bold text-center">
+                  Projects
+                </h3>
+              </button>
             </div>
             <div>
               <div className="flex justify-center mt-4 space-x-6 ">
                 <div
-                  onClick={() => handlePaginationClick("about")}
+                  onClick={() => handlePaginationClick('about')}
                   className={`sm:w-6 sm:h-1 md:w-8 md:h-1 lg:w-10 lg:h-2 xl:w-10 xl:h-2 bg-blue-500 border-2 border-blue-500 cursor-pointer ${
-                    displayText === "about" ? "scale-125" : ""
+                    displayText === 'about' ? 'scale-125' : ''
                   }`}
                 ></div>
                 <div
-                  onClick={() => handlePaginationClick("hobbies")}
+                  onClick={() => handlePaginationClick('hobbies')}
                   className={`sm:w-6 sm:h-1 md:w-8 md:h-1 lg:w-10 lg:h-2 xl:w-10 xl:h-2 bg-blue-500 border-2 border-blue-500 cursor-pointer ${
-                    displayText === "hobbies" ? "scale-125" : ""
+                    displayText === 'hobbies' ? 'scale-125' : ''
                   }`}
                 ></div>
                 <div
-                  onClick={() => handlePaginationClick("motto")}
+                  onClick={() => handlePaginationClick('motto')}
                   className={`sm:w-6 sm:h-1 md:w-8 md:h-1 lg:w-10 lg:h-2 xl:w-10 xl:h-2 bg-blue-500 border-2 border-blue-500 cursor-pointer ${
-                    displayText === "motto" ? "scale-125" : ""
+                    displayText === 'motto' ? 'scale-125' : ''
                   }`}
                 ></div>
               </div>
             </div>
             <div className="mt-4 text-justify w-[30rem]">
-              {displayText === "about" && (
+              {displayText === 'about' && (
                 <p className="sm:text-sm md:text-md lg:text-lg xl:text-lg text-white sm:w-[22rem] sm:ml-[4rem] md:w-[24rem] md:ml-[3rem]">
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                   Recusandae tenetur aliquid ea at iusto sapiente!
                 </p>
               )}
-              {displayText === "hobbies" && (
+              {displayText === 'hobbies' && (
                 <p className="sm:text-sm md:text-md lg:text-lg xl:text-lg text-white sm:w-[22rem] md:w-[24rem]">
                   Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                   Excepturi odit molestiae illo, fuga libero velit a dolorum
                   voluptas eum autem?
                 </p>
               )}
-              {displayText === "motto" && (
+              {displayText === 'motto' && (
                 <p className="sm:text-sm md:text-md lg:text-lg xl:text-lg text-white sm:w-[22rem] md:w-[24rem]">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Veniam, eius dolores molestiae rem ad voluptates repellat eos
@@ -95,24 +96,18 @@ function About() {
               )}
             </div>
             <div className="flex flex-row space-x-4">
-              <a
-                href="/"
-                spy={true}
-                smooth={true}
-                duration={500}
+              <button
+                onClick={() => navigate('/')}
                 className="w-[11rem] h-[3rem] mt-7 bg-transparent border border-blue-900 rounded-full border-4 hover:text-white hover:bg-blue-900 hover:scale-95 cursor-pointer"
               >
                 <h3 className="text-white text-center mt-2">Back</h3>
-              </a>
-              <a
-               href="/profile"
-                spy={true}
-                smooth={true}
-                duration={500}
+              </button>
+              <button
+                onClick={() => navigate('/profile')}
                 className="w-[11rem] h-[3rem] mt-7 bg-blue-900 border border-blue-900 rounded-full border-4 hover:text-white hover:bg-transparent hover:scale-95 cursor-pointer"
               >
                 <h3 className="text-white text-center mt-2">Profile</h3>
-              </a>
+              </button>
             </div>
           </div>
         </div>

@@ -3,11 +3,13 @@ import Navbar from '../components/Navbar';
 import API_LINK from '../api';
 import Background2 from '../assets/bg2.jpg';
 import Background1 from '../assets/bg1.jpg';
+import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 
 function Login() {
+  const navigate = useNavigate(); // Initialize the useNavigate hook
   const [admin, setAdmin] = useState({ username: '', password: '' });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loginError, setLoginError] = useState(false); // State for login error
+  const [loginError, setLoginError] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -17,11 +19,11 @@ function Login() {
       if (res.ok) {
         if (admin.username === json.username && admin.password === json.password) {
           setIsLoggedIn(true);
-          setLoginError(false); // Clear login error if login is successful
-          // Redirect to the project page
-          window.location.href = '/admin'; // Change the URL as needed
+          setLoginError(false);
+          // Redirect to the admin page using useNavigate
+          navigate('/admin'); // Change the URL as needed
         } else {
-          setLoginError(true); // Set login error if credentials are incorrect
+          setLoginError(true);
         }
       }
     } catch (error) {

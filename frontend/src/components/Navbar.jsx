@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import { Link, animateScroll as scroll } from 'react-scroll';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../assets/Logo.png';
 
 function Navbar() {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const closeMenuAndNavigate = (path) => {
+    setMenuOpen(false);
+    navigate(path);
   };
 
   return (
@@ -25,104 +31,66 @@ function Navbar() {
         {/* Render the full menu on screens larger than sm and md */}
         <ul className="flex sm:flex md:flex lg:flex-row xl:flex-row font-bold sm:hidden md:hidden ">
           <li className="mx-2">
-            <a
-              activeClass="active"
-              href="/"
-              spy={true}
-              smooth={true}
-              offset={-70}
-              duration={500}
+            <button
+              onClick={() => closeMenuAndNavigate('/')}
               className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer"
             >
               Home
-            </a>
+            </button>
           </li>
           <li className="mx-2">
-            <a
-              activeClass="active"
-              href="/about"
-              spy={true}
-              smooth={true}
-              duration={500}
+            <button
+              onClick={() => closeMenuAndNavigate('/about')}
               className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer"
             >
               About
-            </a>
+            </button>
           </li>
           <li className="mx-2">
-            <a
-              activeClass="active"
-              href="/profile"
-              spy={true}
-              smooth={true}
-              duration={500}
+            <button
+              onClick={() => closeMenuAndNavigate('/profile')}
               className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer"
             >
               Profile
-            </a>
+            </button>
           </li>
           <li className="mx-2">
-            <a
-              activeClass="active"
-              href="/login"
-              spy={true}
-              smooth={true}
-              duration={500}
+            <button
+              onClick={() => closeMenuAndNavigate('/login')}
               className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer"
             >
               Login
-            </a>
+            </button>
           </li>
         </ul>
       </div>
       {/* Render the hamburger menu on sm and md screens */}
       {menuOpen && (
         <div className="flex flex-col items-end font-bold">
-          <a
-            activeClass="active"
-            href="/"
-            spy={true}
-            smooth={true}
-            offset={-70}
-            duration={500}
+          <button
+            onClick={() => closeMenuAndNavigate('/')}
             className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer my-2"
-            onClick={() => setMenuOpen(false)} // Close menu when link is clicked
           >
             Home
-          </a>
-          <a
-            activeClass="active"
-            href="/about"
-            spy={true}
-            smooth={true}
-            duration={500}
+          </button>
+          <button
+            onClick={() => closeMenuAndNavigate('/about')}
             className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer my-2"
-            onClick={() => setMenuOpen(false)} // Close menu when link is clicked
           >
             About
-          </a>
-          <a
-            activeClass="active"
-            href="/profile"
-            spy={true}
-            smooth={true}
-            duration={500}
+          </button>
+          <button
+            onClick={() => closeMenuAndNavigate('/profile')}
             className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer my-2"
-            onClick={() => setMenuOpen(false)} // Close menu when link is clicked
           >
             Profile
-          </a>
-          <a
-            activeClass="active"
-            href="/login"
-            spy={true}
-            smooth={true}
-            duration={500}
+          </button>
+          <button
+            onClick={() => closeMenuAndNavigate('/login')}
             className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer my-2"
-            onClick={() => setMenuOpen(false)} // Close menu when link is clicked
           >
             Login
-          </a>
+          </button>
         </div>
       )}
     </nav>
