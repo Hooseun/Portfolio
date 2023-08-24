@@ -21,7 +21,7 @@ function Navbar() {
     <nav className="fixed top-0 left-0 right-0 p-4 bg-transparent z-10">
       <div className="flex justify-between items-center">
         <div className="transform hover:scale-150 transition-all duration-300">
-          <img className="w-[10rem] h-[5rem]" src={Logo} alt="Logo" />
+          <img className="w-[5rem] h-[3rem]" src={Logo} alt="Logo" />
         </div>
         <div className="sm:show md:show lg:hidden xl:hidden">
           <button className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer" onClick={toggleMenu}>
@@ -33,7 +33,7 @@ function Navbar() {
           <li className="mx-2">
             <button
               onClick={() => closeMenuAndNavigate('/')}
-              className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer"
+              className="text-blue-400 hover:border-b-2 hover:border-blue-600 cursor-pointer"
             >
               Home
             </button>
@@ -41,7 +41,7 @@ function Navbar() {
           <li className="mx-2">
             <button
               onClick={() => closeMenuAndNavigate('/about')}
-              className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer"
+              className="text-blue-400 hover:border-b-2 hover:border-blue-600 cursor-pointer"
             >
               About
             </button>
@@ -49,7 +49,7 @@ function Navbar() {
           <li className="mx-2">
             <button
               onClick={() => closeMenuAndNavigate('/profile')}
-              className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer"
+              className="text-blue-400 hover:border-b-2 hover:border-blue-600 cursor-pointer"
             >
               Profile
             </button>
@@ -57,7 +57,7 @@ function Navbar() {
           <li className="mx-2">
             <button
               onClick={() => closeMenuAndNavigate('/login')}
-              className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer"
+              className="text-blue-400 hover:border-b-2 hover:border-blue-600 cursor-pointer"
             >
               Login
             </button>

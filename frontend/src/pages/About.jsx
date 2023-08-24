@@ -19,7 +19,7 @@ function About() {
         style={{ backgroundImage: `url(${Background2})` }}
       >
         <Navbar />
-
+        
         <div className="text-center sm:pt-[10rem] md:pt-[10rem] lg:pt-20 lg:mb-14 xl:pt-20 xl:mb-14">
           <h2 className="lg:text-4xl xl:text-4xl font-bold text-blue-500 sm:text-xl md:text-2xl ">
             Let Me Introduce Myself
