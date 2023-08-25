@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import API_LINK from '../api';
 import Background2 from '../assets/bg2.jpg';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import axios from 'axios';
 
 function ProjectCreate() {
     const [projects, setProjects] = useState(null);
@@ -9,7 +10,8 @@ function ProjectCreate() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [selectedProjectId, setSelectedProjectId] = useState(null);
-    const [editingProject, setEditingProject] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1); // Current page number
+    const projectsPerPage = 3; // Number of projects to display per page
     const [newProject, setNewProject] = useState({
         proj_name: '',
         proj_desc: '',
@@ -23,6 +25,9 @@ function ProjectCreate() {
         lang: '',
     });
 
+    const indexOfLastProject = currentPage * projectsPerPage;
+    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+    const currentProjects = projects && projects.slice(indexOfFirstProject, indexOfLastProject);
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -50,27 +55,34 @@ function ProjectCreate() {
             if (res.ok) {
                 setProject(json);
                 setSelectedProjectId(projectId);
+                setEditingFields(json); // Set the editingFields with the fetched project details
             }
         } catch (error) {
             console.error('Error fetching project details:', error);
         }
-
-    }; 
+    };
 
     const handleEditProject = async () => {
         try {
+            const updatedProject = {
+                proj_name: editingFields.proj_name,
+                proj_desc: editingFields.proj_desc,
+                img: editingFields.img,
+                lang: editingFields.lang,
+            };
+
             const res = await fetch(`${API_LINK}/api/projects/${selectedProjectId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(editingProject),
+                body: JSON.stringify(updatedProject),
             });
 
             if (res.ok) {
                 // Update the projects list after editing
-                fetchProjects();
-                closeEditModal(false); // Close the Edit Project modal
+                closeEditModal(); // Close the Edit Project modal
+                window.location.reload();
             }
         } catch (error) {
             console.error('Error editing project:', error);
@@ -109,23 +121,41 @@ function ProjectCreate() {
     }
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewProject({ ...newProject, [name]: value });
+        const { name, value, files } = e.target;
+        if (name === "img") {
+            setNewProject({ ...newProject, img: files[0] });
+        } else {
+            setNewProject({ ...newProject, [name]: value });
+        }
     };
 
-    const handleAddProject = async () => {
-        try {
-            const res = await fetch(`${API_LINK}/api/projects`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newProject),
-            });
+    const handleEditInputChange = (e) => {
+        const { name, value, files } = e.target;
+        if (name === "img") {
+            setEditingFields({ ...editingFields, img: files[0] });
+        } else {
+            setEditingFields({ ...editingFields, [name]: value });
+        }
+    };
 
-            if (res.ok) {
-                fetchProjects();
-                closeModal(true);
+    const handleAddProject = async (e) => {
+        e.preventDefault()
+        try {
+            const formData = new FormData();
+            formData.append('proj_name', newProject.proj_name);
+            formData.append('proj_desc', newProject.proj_desc);
+            formData.append('img', newProject.img);
+            formData.append('lang', newProject.lang);
+    
+            // Send the form data to the /api/upload route to upload the image
+            const imageRes = await fetch(`${API_LINK}/api/upload`, {
+                method: 'POST',
+                body: formData,  
+            });
+            const imageJson = await imageRes.json();
+            if (imageRes.ok) {
+                closeModal();
+                window.location.reload();
             }
         } catch (error) {
             console.error('Error adding project:', error);
@@ -137,7 +167,7 @@ function ProjectCreate() {
     };
 
     return (
-        <div className="h-screen" style={{ backgroundImage: `url(${Background2})` }}>
+        <div className="min-h-screen" style={{ backgroundImage: `url(${Background2})` }}>
             <div className="text-right pt-4 pr-4">
                 <button className="text-blue-500" onClick={handleSignOut}>
                     Sign Out
@@ -146,8 +176,8 @@ function ProjectCreate() {
             <div className="text-center pt-5">
                 <h2 className="text-4xl font-bold text-blue-500">Projects</h2>
                 <div className="flex flex-wrap justify-center mt-8">
-                    {projects &&
-                        projects.map((project) => (
+                    {currentProjects &&
+                        currentProjects.map((project) => (
                             <div
                                 key={project._id}
                                 className="bg-white rounded-lg shadow-md p-4 m-4 h-[28rem]"
@@ -167,12 +197,12 @@ function ProjectCreate() {
                                         <FaTrash />
                                     </button>
                                 </div>
-                                <div className='mt-[-10rem]'>
+                                <div className='flex flex-wrap justify-center'>
                                     <h3 className="text-xl font-bold mb-2">{project.proj_name}</h3>
                                     <img
-                                        src={project.img}
+                                        src={project.img.includes('http') ? project.img : `${API_LINK}${project.img}`}
                                         alt={project.proj_name}
-                                        className="w-full h-32 object-cover mb-2 rounded-lg"
+                                        className="w-full h-[19rem]  object-cover mb-2 rounded-lg"
                                     />
                                 </div>
                                 <div>
@@ -182,7 +212,22 @@ function ProjectCreate() {
                             </div>
                         ))}
                 </div>
-                <div className="text-center mt-8">
+                {projects && projects.length > projectsPerPage && (
+                    <div className="flex justify-center mt-2">
+                        {/* Pagination buttons */}
+                        {Array.from({ length: Math.ceil(projects.length / projectsPerPage) }).map((_, index) => (
+                            <button
+                                key={index}
+                                className={`mx-2 px-3 py-1 rounded-full ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'
+                                    }`}
+                                onClick={() => setCurrentPage(index + 1)}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                    </div>
+                )}
+                <div className="text-center mt-6">
                     <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={openModal}>
                         Add Project
                     </button>
@@ -191,65 +236,67 @@ function ProjectCreate() {
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                         <div className="bg-white p-4 rounded-md">
                             <h2 className="text-2xl font-bold mb-4">Add Project</h2>
-                            <div className="mb-4">
-                                <label htmlFor="proj_name" className="block text-gray-700 font-bold mb-2">
-                                    Project Name
-                                </label>
-                                <input
-                                    type="text"
-                                    id="proj_name"
-                                    name="proj_name"
-                                    className="w-full px-4 py-2 border border-gray-400 rounded"
-                                    required
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="proj_desc" className="block text-gray-700 font-bold mb-2">
-                                    Project Description
-                                </label>
-                                <textarea
-                                    id="proj_desc"
-                                    name="proj_desc"
-                                    className="w-full px-4 py-2 border border-gray-400 rounded"
-                                    required
-                                    onChange={handleInputChange}
-                                ></textarea>
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="img" className="block text-gray-700 font-bold mb-2">
-                                    Image (Browse File)
-                                </label>
-                                <input
-                                    type="file"
-                                    id="img"
-                                    name="img"
-                                    className="w-full px-4 py-2 border border-gray-400 rounded"
-                                    required
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="lang" className="block text-gray-700 font-bold mb-2">
-                                    Project Language
-                                </label>
-                                <input
-                                    type="text"
-                                    id="lang"
-                                    name="lang"
-                                    className="w-full px-4 py-2 border border-gray-400 rounded"
-                                    required
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="flex justify-end">
-                                <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={handleAddProject}>
-                                    Add
-                                </button>
-                                <button className="bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 ml-2" onClick={closeModal}>
-                                    Cancel
-                                </button>
-                            </div>
+                            <form encType="multipart/form-data" method="POST" onSubmit={handleAddProject}>
+                                <div className="mb-4">
+                                    <label htmlFor="proj_name" className="block text-gray-700 font-bold mb-2">
+                                        Project Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="proj_name"
+                                        name="proj_name"
+                                        className="w-full px-4 py-2 border border-gray-400 rounded"
+                                        required
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="proj_desc" className="block text-gray-700 font-bold mb-2">
+                                        Project Description
+                                    </label>
+                                    <textarea
+                                        id="proj_desc"
+                                        name="proj_desc"
+                                        className="w-full px-4 py-2 border border-gray-400 rounded"
+                                        required
+                                        onChange={handleInputChange}
+                                    ></textarea>
+                                </div>
+                                <div className="mb-4">
+                                    <button onClick={handleAddProject} className="block text-gray-700 font-bold mb-2">
+                                        Image (Browse File)
+                                    </button>
+                                    <input
+                                        type="file"
+                                        id="img"
+                                        name="img"
+                                        className="w-full px-4 py-2 border border-gray-400 rounded"
+                                        required
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="lang" className="block text-gray-700 font-bold mb-2">
+                                        Project Language
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="lang"
+                                        name="lang"
+                                        className="w-full px-4 py-2 border border-gray-400 rounded"
+                                        required
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="flex justify-end">
+                                    <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onClick={handleAddProject}>
+                                        Add
+                                    </button>
+                                    <button className="bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 ml-2" onClick={closeModal}>
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 )}
@@ -267,8 +314,8 @@ function ProjectCreate() {
                                     name="proj_name"
                                     className="w-full px-4 py-2 border border-gray-400 rounded"
                                     required
-                                    value={project.proj_name}
-                                    onChange={handleInputChange}
+                                    value={editingFields.proj_name}
+                                    onChange={handleEditInputChange}
                                 />
                             </div>
                             <div className="mb-4">
@@ -280,8 +327,8 @@ function ProjectCreate() {
                                     name="proj_desc"
                                     className="w-full px-4 py-2 border border-gray-400 rounded"
                                     required
-                                    value={project.proj_desc}
-                                    onChange={handleInputChange}
+                                    value={editingFields.proj_desc}
+                                    onChange={handleEditInputChange}
                                 ></textarea>
                             </div>
                             <div className="mb-4">
@@ -295,7 +342,7 @@ function ProjectCreate() {
                                     className="w-full px-4 py-2 border border-gray-400 rounded"
                                     required
 
-                                    onChange={handleInputChange}
+                                    onChange={handleEditInputChange}
                                 />
                             </div>
                             <div className="mb-4">
@@ -308,8 +355,8 @@ function ProjectCreate() {
                                     name="lang"
                                     className="w-full px-4 py-2 border border-gray-400 rounded"
                                     required
-                                    value={project.lang}
-                                    onChange={handleInputChange}
+                                    value={editingFields.lang}
+                                    onChange={handleEditInputChange}
                                 />
                             </div>
                             <div className="flex justify-end">
