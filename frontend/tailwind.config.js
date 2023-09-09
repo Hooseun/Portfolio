@@ -15,7 +15,11 @@ export default {
       'xl': {'min': '1440px'},
       // => @media (min-width: 1280px and max-width: 1535px) { ... }
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        custom: ['CustomFont', 'sans'],
+      },
+    },
   },
   plugins: [],
 }

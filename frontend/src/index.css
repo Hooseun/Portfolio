@@ -2,3 +2,180 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'CustomFont'; /* Choose a name for your font family */
+    src: url('/fonts/fontc.woff') format('woff2'),
+         url('/fonts/fontc.woff') format('woff');
+    /* Add more font formats if needed */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px); /* Adjust this value as needed */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .slide-in {
+    animation: slideIn 0.5s ease-in-out forwards;
+  }
+  
+  .hidden {
+    display: none;
+  }
+
+
+  .splash {
+    width: 500px;
+    height: 500px;
+    background:
+      repeating-conic-gradient(#00f 0 4%, #0000 0 12%),
+      repeating-conic-gradient(#0000 0 5%, #00f 0 7%) 50% / 60% 60%,
+      repeating-conic-gradient(#0000 0 8%, #00f 0 9%) 50% / 70% 70%,
+      repeating-conic-gradient(#0000 0 11%, #00f 0 13%) 50% / 80% 80%,
+      radial-gradient(#00f 22%, #0000 0);
+    background-repeat: no-repeat;
+
+
+  }
+
+  @keyframes slideLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slideLeft {
+    animation: slideLeft 1s ease-out;
+  }
+  
+  .animate-slideRight {
+    animation: slideRight 1s ease-out;
+  }
+
+  .button-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .button-container::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid white; /* Adjust the color as needed */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+  }
+  
+  .button-container:hover::after {
+    opacity: 1;
+    top: 0; 
+  }
+
+
+.icon-circle {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  animation: rotateIcon 5s linear infinite;
+}
+
+.icon1 {
+
+  transform-origin: center bottom;
+  animation-delay: 1s;
+  background-color: white;
+  color: blue;
+  
+}
+.icon2 {
+  transform-origin: center bottom;
+  animation-delay: 5s;
+  background-color: rgba(255, 255, 255, 0.744);
+  color: red;
+}
+.icon3 {
+  transform-origin: center bottom;
+  animation-delay: 3s;
+  background-color: rgba(255, 255, 255, 0.744);
+  color: rgb(254, 254, 0);
+  
+}
+
+
+
+
+@keyframes rotateIcon {
+  from {
+    transform: translateX(-50%) rotate(0);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+.splash {
+  animation: moveSplash 1s linear infinite alternate;
+}
+
+@keyframes moveSplash {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(20px); /* Adjust the distance as needed */
+  }
+}
+
+@keyframes moveIconsCircular {
+  0% {
+    transform: rotate(130deg) translateY(-150px) rotate(110deg);
+  }
+  100% {
+    transform: rotate(0deg) translateY(37rem) rotate(0deg);
+  }
+}
+
+.fade-in-text {
+  font-family: Arial;
+  font-size: 150px;
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}

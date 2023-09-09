@@ -7,6 +7,7 @@ import Logo from '../assets/Logo.png';
 function Navbar() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoHovered, setLogoHovered] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -20,8 +21,20 @@ function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 p-4 bg-transparent z-10">
       <div className="flex justify-between items-center">
-        <div className="transform hover:scale-150 transition-all duration-300">
+        <div
+          className="transform hover:scale-150 transition-all duration-300 relative"
+          onMouseEnter={() => setLogoHovered(true)}
+          onMouseLeave={() => setLogoHovered(false)}
+        >
           <img className="w-[5rem] h-[3rem]" src={Logo} alt="Logo" />
+          {logoHovered && (
+            <div
+              className={`text-[1.5rem] italic absolute top-0 left-full p-2 font-custom text-blue-400 font-bold ${logoHovered ? 'slide-in' : 'hidden'
+                }`}
+            >
+              GIAN
+            </div>
+          )}
         </div>
         <div className="sm:show md:show lg:hidden xl:hidden">
           <button className="text-blue-600 hover:border-b-2 hover:border-blue-800 cursor-pointer" onClick={toggleMenu}>

@@ -30,6 +30,12 @@ function Profile() {
         link.click();
     };
 
+    const handleContactClick = () => {
+        // Navigate to the contact page
+        // Replace '/contact' with the actual path of your contact page
+        navigate("/about");
+    };
+
     return (
         <div className="min-h-screen relative">
             <div
@@ -42,7 +48,7 @@ function Profile() {
                     <h2 className="text-4xl font-bold text-blue-500 text-center pt-20 md:pt-10">Profile</h2>
                     <div className="grid sm:gap-x-0 sm:gap-y-4 md:gap-y-4 lg:gap-4 xl:gap-4 mt-8 sm:grid-cols-2 sm:px-4  md:grid-cols-2  lg:grid-cols-3 lg:px-8 xl:grid-cols-3 xl:px-10 ">
                         {/* Skills Card */}
-                        <div className="bg-blue-500 sm:h-[8rem] sm:ml-[1rem] md:h-[10rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]  rounded-xl shadow-md flex flex-col justify-center ">
+                        <div className="bg-blue-500 sm:h-[8rem] sm:ml-[1rem] md:h-[10rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]  rounded-xl shadow-md flex flex-col justify-center animate-slideLeft">
                             <h3 className="text-center text-white sm:text-sm md:text-md lg:text-2xl xl:text-2xl font-bold mb-4">Programming Language</h3>
                             <ul className="text-white sm:text-sm sm:px-4 md:text-md md:px-4 lg:text-xl lg:px-8 xl:text-xl xl:px-8">
                                 <li>C++ {generateStars(3)}</li>
@@ -53,12 +59,12 @@ function Profile() {
                         </div>
 
                         {/* Experience Card */}
-                        <div className="bg-blue-500 sm:h-[8rem]  sm:ml-[1rem] md:h-[10rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]   rounded-xl shadow-md flex flex-col justify-center ">
+                        <div className="bg-blue-500 sm:h-[8rem]  sm:ml-[1rem] md:h-[10rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]   rounded-xl shadow-md flex flex-col justify-center animate-slideLeft">
                             <h3 className="text-center text-white sm:text-sm md:text-md lg:text-2xl xl:text-2xl font-bold mb-4">Experience</h3>
                         </div>
 
                         {/* Objective Card */}
-                        <div className="bg-blue-500 sm:h-[10rem] sm:ml-[1rem] md:h-[12rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]   rounded-xl shadow-md flex flex-col justify-center ">
+                        <div className="bg-blue-500 sm:h-[10rem] sm:ml-[1rem] md:h-[12rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]   rounded-xl shadow-md flex flex-col justify-center animate-slideLeft">
                             <div className="text-white text-center">
                                 <h3 className="text-center text-white sm:text-sm md:text-md lg:text-2xl xl:text-2xl font-bold mb-4">Objective</h3>
                                 <p className="text-sm px-4 text-justify">
@@ -69,7 +75,7 @@ function Profile() {
 
 
                         {/* Education Card */}
-                        <div className="bg-blue-500 sm:h-[10rem] sm:ml-[1rem] md:h-[12rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]  rounded-xl shadow-md flex flex-col justify-center ">
+                        <div className="bg-blue-500 sm:h-[10rem] sm:ml-[1rem] md:h-[12rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]  rounded-xl shadow-md flex flex-col justify-center animate-slideRight">
                             <h3 className="text-center text-white sm:text-sm md:text-md lg:text-2xl xl:text-2xl xl:mb-0 xl:mt-5 font-bold mb-4">Education</h3>
                             <div className="sm:text-[10px] sm:px-4 md:text-[12px] md:px-4 lg:text-[12px] lg:px-4 xl:text-[14px] xl:p-4 text-white text-justify">
                                 <p >Junior High School (2014-2018)</p>
@@ -82,7 +88,7 @@ function Profile() {
                         </div>
 
                         {/* Contact Info Card */}
-                        <div className="bg-blue-500 sm:h-[8rem] sm:ml-[1rem] md:h-[10rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]   rounded-xl shadow-md flex flex-col justify-center ">
+                        <div className="bg-blue-500 sm:h-[8rem] sm:ml-[1rem] md:h-[10rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]   rounded-xl shadow-md flex flex-col justify-center animate-slideRight">
                             <h3 className="text-center text-white sm:text-sm md:text-md lg:text-2xl xl:text-2xl xl:mb-0 xl:mt-5 font-bold mb-2">Contact Info</h3>
                             <div className="sm:text-[10px] sm:px-4 md:text-[12px] md:px-4 lg:text-[12px] lg:px-4 xl:text-[14px] xl:p-4 text-white text-justify space-y-1">
                                 <div className="flex items-center">
@@ -109,16 +115,22 @@ function Profile() {
                         </div>
 
                         {/* Others Card */}
-                        <div className="bg-blue-500 sm:h-[8rem] sm:ml-[1rem] md:h-[10rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]  rounded-xl shadow-md flex flex-col justify-center ">
+                        <div className="bg-blue-500 sm:h-[8rem] sm:ml-[1rem] md:h-[10rem] md:w-[20rem] md:ml-[2rem] lg:h-[12rem] xl:h-[14rem]  rounded-xl shadow-md flex flex-col justify-center animate-slideRight">
                             <h3 className="text-center text-white sm:text-sm md:text-md lg:text-2xl xl:text-2xl xl:mb-0 xl:mt-5 font-bold mb-4">PERSONAL INFO</h3>
                         </div>
                     </div>
-                    <div className='sm:mt-6 bottom-2'>
+                    <div className='flex sm:mt-6 bottom-2 space-x-6 '>
                         <button
                             onClick={handleDownloadCV}
                             className="flex border border-2 border-blue-500 bg-transparent text-white text-xl font-bold px-6 py-3 mt-4 rounded-full shadow-md hover:bg-blue-600 hover:scale-95">
                             <FaDownload className="mt-1 mr-2" />
                             <p className='text-lg'>Download CV</p>
+                        </button>
+                        <button
+                            onClick={handleContactClick}
+                            className="flex border border-2 border-blue-500 bg-blue-600 text-white text-xl font-bold px-6 py-3 mt-4 rounded-full shadow-md hover:bg-transparent hover:scale-95"
+                        >
+                            CONTACT ME
                         </button>
                     </div>
                 </div>
